@@ -3,9 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 @plugin "@tailwindcss/forms";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --color-beige-heikoh: #FDF9E7;
-  --color-blue-light-heikoh: #2E7AA2;
-  --color-blue-dark-heikoh: #A4CEE5;
 }
