@@ -1,14 +1,29 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy } from '@angular/core';
+import { Theme } from '../services/theme';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header implements AfterViewInit, OnDestroy {
   private scrollHandler: (() => void) | null = null;
   private centerLineElement: HTMLDivElement | null = null;
+  private theme = inject(Theme);
+  currentTheme$ = this.theme.theme$;
+  isDark = false;
+
+  ngOnInit() {
+    this.currentTheme$.subscribe(theme => {
+      this.isDark = this.theme.isDarkMode();
+    });
+  }
+
+  changeTheme(theme: 'light' | 'dark' | 'auto') {
+    this.theme.setTheme(theme);
+  }
 
   ngOnDestroy() {
     if (this.scrollHandler) {
